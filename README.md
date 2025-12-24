@@ -1,4 +1,4 @@
-# Why Alignment Should Precede Knowledge Distillation
+# Why Alignment Should Precede Knowledge Distillation: A Minimal Working Explanation
 
 [![arXiv](https://img.shields.io/badge/arXiv-TBD-b31b1b.svg)](https://arxiv.org/abs/2509.23667) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -14,11 +14,11 @@ Optimizing compact but superior Large Language Models (LLMs) for deployment typi
 
 In this work, we investigate the interaction between alignment and distillation, comparing two distinct pipelines:
 
-1. Distill-then-Align (K→A): Distilling a pre-trained teacher into a small student model, followed by alignment on the student.
+1. **Distill-then-Align (K->A)**: Distilling a pre-trained teacher into a small student model, followed by alignment on the student.
 
-2. Align-then-Distill (A→K): Aligning the teacher model first, then distilling its aligned distribution into the small student model.
+2. **Align-then-Distill (A->K)**: Aligning the teacher model first, then distilling its aligned distribution into the small student model.
 
-We provide a theoretical analysis and experimental validation using Mixture of Gaussians (MoG) and SmolLM2 models. Our results demonstrate that Alignment should precede Knowledge Distillation. We demonstrate that the A->K pipeline enables students to more accurately approximate the aligned policy's high-probability regions, whereas K->A forces the capacity-limited student.
+We provide a theoretical analysis and experimental validation using Mixture of Gaussians (MoG) and SmolLM2 models. **Our results demonstrate that Alignment must precede Knowledge Distillation**. We demonstrate that the A->K pipeline enables students to more accurately approximate the target policy's high-probability regions, whereas K->A forces the capacity-limited student.
 
 ---
 
