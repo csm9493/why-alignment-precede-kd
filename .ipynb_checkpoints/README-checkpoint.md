@@ -1,6 +1,8 @@
-# Why Alignment Should Precede Knowledge Distillation
+# Why Alignment Should Precede Knowledge Distillation: A Minimal Working Explanation
 
-This repository contains the official implementation for the paper: **"Why Alignment Should Precede Knowledge Distillation"** (NeurIPS 2025).
+[![arXiv](https://img.shields.io/badge/arXiv-TBD-b31b1b.svg)](https://arxiv.org/abs/2509.23667) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+This repository contains the official implementation for the paper: **"Why Alignment Must Precede Knowledge Distillation: A Minimal Working Explanation"**.
 
 **Authors:** Sungmin Cha and Kyunghyun Cho
 
@@ -8,15 +10,15 @@ This repository contains the official implementation for the paper: **"Why Align
 
 ### 📖 Abstract
 
-Optimizing Large Language Models (LLMs) for deployment typically involves two critical post-training stages: Alignment (e.g., RLHF, DPO) to ensure performance for target tasks, and Knowledge Distillation (KD) to reduce computational costs. However, the optimal scheduling of these two processes remains an open question.
+Optimizing compact but superior Large Language Models (LLMs) for deployment typically involves two critical post-training stages: Alignment (e.g., RLHF, DPO) to ensure performance for target tasks, and Knowledge Distillation (KD) to reduce computational costs. However, the optimal scheduling of these two processes remains an open question.
 
 In this work, we investigate the interaction between alignment and distillation, comparing two distinct pipelines:
 
-1. Distill-then-Align (K→A): Distilling a pre-trained teacher into a small student model, followed by alignment on the student.
+1. **Distill-then-Align (K->A)**: Distilling a pre-trained teacher into a small student model, followed by alignment on the student.
 
-2. Align-then-Distill (A→K): Aligning the teacher model first, then distilling its aligned distribution into the small student model.
+2. **Align-then-Distill (A->K)**: Aligning the teacher model first, then distilling its aligned distribution into the small student model.
 
-We provide a theoretical analysis and experimental validation using Mixture of Gaussians (MoG), RLHF (PPO), and DPO on LLMs. Our results demonstrate that Alignment should precede Knowledge Distillation. We show that the A→K pipeline allows the student to directly approximate the aligned policy's high-probability regions, whereas K→A forces the capacity-limited student to navigate the optimization landscape of alignment from a suboptimal initialization.
+We provide a theoretical analysis and experimental validation using Mixture of Gaussians (MoG) and SmolLM2 models. **Our results demonstrate that Alignment must precede Knowledge Distillation**. We demonstrate that the A->K pipeline enables students to more accurately approximate the target policy's high-probability regions, whereas K->A forces the capacity-limited student.
 
 ---
 
@@ -65,11 +67,11 @@ why-alignment-precede-kd/
 
 ### 3. Experimental Pipeline
 
-We compare two distinct pipelines: **KD  Alignment** and **Alignment  KD**.
+We compare two distinct pipelines: **KD -> Alignment** and **Alignment -> KD**.
 
-#### 3.1 Scenario A: KD  Alignment (KD-First)
+#### 3.1 Scenario A: KD -> Alignment (KD-First)
 
-In this setting, we first distill the model and then apply alignment techniques.
+In this setting, we first distill the model and then apply alignment techniques. Note that all the distilled models (135M;p'') should be located in `pretrained_models/`.
 
 **RLHF (PPO)**
 To run the experiment using PPO:
@@ -93,9 +95,9 @@ bash run_dpo_offline_k_a.sh
 
 ---
 
-#### 3.2 Scenario B: Alignment  KD (Alignment-First)
+#### 3.2 Scenario B: Alignment -> KD (Alignment-First)
 
-In this setting, we align the teacher model first, followed by knowledge distillation to the student.
+In this setting, we align the teacher model first, followed by knowledge distillation to the student. Note that all the pretrained models (360M;p') should be located in `pretrained_models/`.
 
 **Step 1: Alignment**
 First, perform alignment on the model using one of the following methods:
