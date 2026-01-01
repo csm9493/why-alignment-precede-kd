@@ -47,7 +47,7 @@ We provide a self-contained experiment to demonstrate the theoretical properties
 Before running the main experiments, please download the necessary model checkpoints.
 
 1. Download the **Pretrained** and **Target** models from the following link:
-* **[Insert Link Here]**
+* **[Google Drive Link](https://drive.google.com/drive/folders/15GvFhWShba54kjbrW0h9P7HuZQ5DHPtD?usp=share_link)**
 
 
 2. After downloading, place the `pretrained_models/` and `target_models/` directories into the root of this repository (`./why-alignment-precede-kd/`).
