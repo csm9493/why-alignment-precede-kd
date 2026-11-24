@@ -62,12 +62,15 @@ def batched_reward_scores(prompts, responses, reward_model, reward_tokenizer, ba
                                   attention_mask=inputs["attention_mask"]).logits
             shift_logits = logits[:, :-1, :].contiguous()
             shift_labels = inputs["input_ids"][:, 1:].contiguous()
+            shift_mask = inputs["attention_mask"][:, 1:].contiguous()
             loss_fct = torch.nn.CrossEntropyLoss(reduction="none")
             loss = loss_fct(shift_logits.view(-1, shift_logits.size(-1)),
                             shift_labels.view(-1)).view(shift_labels.size(0), -1)
-            scores_list.append(-loss.mean(dim=1).detach().cpu())
+            # Average over real tokens only, so padding does not change the score
+            loss = (loss * shift_mask).sum(dim=1) / shift_mask.sum(dim=1).clamp_min(1)
+            scores_list.append(-loss.detach().cpu())
         # Memory cleanup
-        del inputs, logits, shift_logits, shift_labels, loss
+        del inputs, logits, shift_logits, shift_labels, shift_mask, loss
         torch.cuda.empty_cache()
     return torch.cat(scores_list)
     
